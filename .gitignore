@@ -24,3 +24,4 @@ data/raw/creditcard.csv
 # Artefatos de modelo e splits
 artifacts/*
 !artifacts/metrics.json
+/params.yaml

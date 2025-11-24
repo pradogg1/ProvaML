@@ -1,6 +1,6 @@
 stages:
   prepare:
-    cmd: python src/prepare_data.py
+    cmd: poetry run python -m src.prepare_data
     deps:
       - data/raw/creditcard.csv
       - src/prepare_data.py
@@ -13,22 +13,29 @@ stages:
       - artifacts/y_test.joblib
 
   train:
-    cmd: python src/train_model.py
+    cmd: poetry run python -m src.train_model
     deps:
       - artifacts/X_train.joblib
       - artifacts/y_train.joblib
       - src/train_model.py
       - src/config.py
+    params:
+      - train
     outs:
       - artifacts/model_xgb.joblib
 
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: poetry run python -m src.evaluate
     deps:
       - artifacts/X_test.joblib
       - artifacts/y_test.joblib
       - artifacts/model_xgb.joblib
       - src/evaluate.py
       - src/config.py
+    params:
+      - eval
     metrics:
       - artifacts/metrics.json
+    outs:
+      - artifacts/graphs.png
+      - artifacts/metrics_prev.json

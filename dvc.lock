@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   prepare:
-    cmd: python src/prepare_data.py
+    cmd: poetry run python -m src.prepare_data
     deps:
     - path: data/raw/creditcard.csv
       hash: md5
@@ -9,16 +9,16 @@ stages:
       size: 150828752
     - path: src/config.py
       hash: md5
-      md5: 0a77d90509e60f09bb4053d9eb08f09e
-      size: 349
+      md5: 357f872d116e4dd51574b47343d35c08
+      size: 565
     - path: src/features.py
       hash: md5
       md5: 5e89ffb4c8bc5d0aa58653e076ae82a2
       size: 303
     - path: src/prepare_data.py
       hash: md5
-      md5: 6b8df3e78b48f14aeb8542fce9f5b410
-      size: 1149
+      md5: f169a68d672c79ad599775d7b1e869f3
+      size: 1157
     outs:
     - path: artifacts/X_test.joblib
       hash: md5
@@ -37,7 +37,7 @@ stages:
       md5: ada00e6e15815e687f1b59e0e5b1a795
       size: 7291850
   train:
-    cmd: python src/train_model.py
+    cmd: poetry run python -m src.train_model
     deps:
     - path: artifacts/X_train.joblib
       hash: md5
@@ -49,19 +49,29 @@ stages:
       size: 7291850
     - path: src/config.py
       hash: md5
-      md5: 0a77d90509e60f09bb4053d9eb08f09e
-      size: 349
+      md5: 357f872d116e4dd51574b47343d35c08
+      size: 565
     - path: src/train_model.py
       hash: md5
-      md5: cb27c3eb9fc833ff6715a47c994440bd
-      size: 675
+      md5: 670a19a6d8292ae0cf5d3c03120817bf
+      size: 627
+    params:
+      params.yaml:
+        train:
+          n_estimators: 300
+          max_depth: 4
+          learning_rate: 0.05
+          subsample: 0.8
+          colsample_bytree: 0.8
+          scale_pos_weight: 300
+          random_state: 37
     outs:
     - path: artifacts/model_xgb.joblib
       hash: md5
-      md5: 59caf0a654ba397e275f4a1fa170a070
-      size: 239104
+      md5: c7f477055c15e61e9f88175ee201d01d
+      size: 468272
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: poetry run python -m src.evaluate
     deps:
     - path: artifacts/X_test.joblib
       hash: md5
@@ -69,22 +79,34 @@ stages:
       size: 13671963
     - path: artifacts/model_xgb.joblib
       hash: md5
-      md5: 59caf0a654ba397e275f4a1fa170a070
-      size: 239104
+      md5: c7f477055c15e61e9f88175ee201d01d
+      size: 468272
     - path: artifacts/y_test.joblib
       hash: md5
       md5: 7718790143d8230a1f2ee7c60eef7e4c
       size: 1823584
     - path: src/config.py
       hash: md5
-      md5: 0a77d90509e60f09bb4053d9eb08f09e
-      size: 349
+      md5: 357f872d116e4dd51574b47343d35c08
+      size: 565
     - path: src/evaluate.py
       hash: md5
-      md5: 78457f508223d11fb0367a613be1080d
-      size: 1753
+      md5: 1559846c404504252510690e45320933
+      size: 3604
+    params:
+      params.yaml:
+        eval:
+          threshold: 0.4
     outs:
+    - path: artifacts/graphs.png
+      hash: md5
+      md5: a0974415f73a9af026b6b9950aafc94f
+      size: 13153
     - path: artifacts/metrics.json
       hash: md5
-      md5: c693d36fa6ea22a8d0db9863270c7ec8
-      size: 1123
+      md5: 0fdd93fb7c55d6cdaeabe186dc67a8cd
+      size: 1148
+    - path: artifacts/metrics_prev.json
+      hash: md5
+      md5: 0fdd93fb7c55d6cdaeabe186dc67a8cd
+      size: 1148

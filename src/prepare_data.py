@@ -2,8 +2,8 @@ import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from config import DATA_RAW, ARTIFACTS_DIR, RANDOM_STATE_SPLIT, TEST_SIZE
-from features import make_features
+from src.config import DATA_RAW, ARTIFACTS_DIR, RANDOM_STATE_SPLIT, TEST_SIZE
+from src.features import make_features
 
 
 def main():

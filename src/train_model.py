@@ -1,18 +1,18 @@
 import joblib
 import xgboost as xgb
 
-from config import ARTIFACTS_DIR, XGB_RANDOM_STATE, XGB_SCALE_POS_WEIGHT
+from src.config import ARTIFACTS_DIR, XGB_PARAMS
 
 
 def main():
     X_train = joblib.load(ARTIFACTS_DIR / "X_train.joblib")
     y_train = joblib.load(ARTIFACTS_DIR / "y_train.joblib")
 
+    # usa os parâmetros do params.yaml
     model = xgb.XGBClassifier(
         use_label_encoder=False,
         eval_metric="logloss",
-        random_state=XGB_RANDOM_STATE,
-        scale_pos_weight=XGB_SCALE_POS_WEIGHT,
+        **XGB_PARAMS,
     )
 
     model.fit(X_train, y_train)
