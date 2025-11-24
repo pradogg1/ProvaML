@@ -1,0 +1,34 @@
+stages:
+  prepare:
+    cmd: python src/prepare_data.py
+    deps:
+      - data/raw/creditcard.csv
+      - src/prepare_data.py
+      - src/features.py
+      - src/config.py
+    outs:
+      - artifacts/X_train.joblib
+      - artifacts/X_test.joblib
+      - artifacts/y_train.joblib
+      - artifacts/y_test.joblib
+
+  train:
+    cmd: python src/train_model.py
+    deps:
+      - artifacts/X_train.joblib
+      - artifacts/y_train.joblib
+      - src/train_model.py
+      - src/config.py
+    outs:
+      - artifacts/model_xgb.joblib
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - artifacts/X_test.joblib
+      - artifacts/y_test.joblib
+      - artifacts/model_xgb.joblib
+      - src/evaluate.py
+      - src/config.py
+    metrics:
+      - artifacts/metrics.json

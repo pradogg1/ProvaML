@@ -1,0 +1,26 @@
+# Ambiente / Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+
+# Testes
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+OldVersion/
+
+# DVC cache
+.dvc/cache/
+.dvc/tmp/
+
+# Dados brutos
+data/raw/creditcard.csv
+
+# Artefatos de modelo e splits
+artifacts/*
+!artifacts/metrics.json
