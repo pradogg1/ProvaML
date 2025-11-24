@@ -58,8 +58,8 @@ stages:
     params:
       params.yaml:
         train:
-          n_estimators: 300
-          max_depth: 4
+          n_estimators: 500
+          max_depth: 6
           learning_rate: 0.05
           subsample: 0.8
           colsample_bytree: 0.8
@@ -68,8 +68,8 @@ stages:
     outs:
     - path: artifacts/model_xgb.joblib
       hash: md5
-      md5: c7f477055c15e61e9f88175ee201d01d
-      size: 468272
+      md5: 74e14220b87adcddfd668bd60f32ec31
+      size: 1201800
   evaluate:
     cmd: poetry run python -m src.evaluate
     deps:
@@ -79,8 +79,8 @@ stages:
       size: 13671963
     - path: artifacts/model_xgb.joblib
       hash: md5
-      md5: c7f477055c15e61e9f88175ee201d01d
-      size: 468272
+      md5: 74e14220b87adcddfd668bd60f32ec31
+      size: 1201800
     - path: artifacts/y_test.joblib
       hash: md5
       md5: 7718790143d8230a1f2ee7c60eef7e4c
@@ -91,22 +91,18 @@ stages:
       size: 565
     - path: src/evaluate.py
       hash: md5
-      md5: 1559846c404504252510690e45320933
-      size: 3604
+      md5: 08d4a86afe616112a723c343838c2984
+      size: 3000
     params:
       params.yaml:
         eval:
-          threshold: 0.4
+          threshold: 0.3
     outs:
     - path: artifacts/graphs.png
       hash: md5
-      md5: a0974415f73a9af026b6b9950aafc94f
-      size: 13153
+      md5: 78a251ced3489edf774a45222026c5f0
+      size: 16888
     - path: artifacts/metrics.json
       hash: md5
-      md5: 0fdd93fb7c55d6cdaeabe186dc67a8cd
-      size: 1148
-    - path: artifacts/metrics_prev.json
-      hash: md5
-      md5: 0fdd93fb7c55d6cdaeabe186dc67a8cd
-      size: 1148
+      md5: be5b04fdd15c8de388d88c4a2dc8589d
+      size: 1195

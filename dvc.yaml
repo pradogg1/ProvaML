@@ -38,4 +38,8 @@ stages:
       - artifacts/metrics.json
     outs:
       - artifacts/graphs.png
-      - artifacts/metrics_prev.json
+    plots:
+      - artifacts/prc.tsv:
+          x: recall
+          y: precision
+
